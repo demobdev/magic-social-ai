@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const { userId } = auth();
     const user = await currentUser();
 
-    if (!userId || !user) {
+    if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
       });
     }
 
-    if (!stripeCustomer.stripeCustomerId) {
+    if (!stripeCustomer?.stripeCustomerId) {
       throw new Error("Failed to create or retrieve Stripe customer");
     }
 
@@ -67,8 +67,8 @@ export async function POST(req: Request) {
       customer: stripeCustomer?.stripeCustomerId,
       line_items,
       mode: "payment",
-      success_url: `${process.env.NEXT_PUBLIC_URL}/dashboard/`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL}/`,
+      success_url: `https://wordsmith-xi.vercel.app/dashboard/`,
+      cancel_url: `https://wordsmith-xi.vercel.app/`,
       metadata: {
         userId: userId,
       },
