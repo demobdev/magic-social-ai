@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const { userId } = auth();
     const user = await currentUser();
 
-    if (!userId) {
+    if (!userId || !user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -59,12 +59,16 @@ export async function POST(req: Request) {
       });
     }
 
+    if (!stripeCustomer.stripeCustomerId) {
+      throw new Error("Failed to create or retrieve Stripe customer");
+    }
+
     const session = await stripe.checkout.sessions.create({
       customer: stripeCustomer?.stripeCustomerId,
       line_items,
       mode: "payment",
-      success_url: `http://magic-social.vercel.app/dashboard/`,
-      cancel_url: `http://magic-social.vercel.app/`,
+      success_url: `${process.env.NEXT_PUBLIC_URL}/dashboard/`,
+      cancel_url: `${process.env.NEXT_PUBLIC_URL}/`,
       metadata: {
         userId: userId,
       },
@@ -72,6 +76,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
+    console.error("Checkout error:", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

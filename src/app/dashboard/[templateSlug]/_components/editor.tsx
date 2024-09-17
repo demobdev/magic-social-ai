@@ -1,12 +1,14 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useMemo } from "react";
-import "react-quill/dist/quill.snow.css";
+import React, { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 
 export const Editor = ({ value }: { value: string }) => {
   const ReactQuill = useMemo(
-    () => dynamic(() => import("react-quill"), { ssr: false }),
+    () => dynamic(() => import('react-quill'), {
+      ssr: false,
+      loading: () => <p>Loading editor...</p>
+    }),
     []
   );
 
