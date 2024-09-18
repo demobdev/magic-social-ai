@@ -1,7 +1,10 @@
+"use client";
+
 import { Auth } from "@/components/auth";
 import { SearchIcon } from "lucide-react";
 import React from "react";
 import { Categories } from "./categories";
+import { Input } from "@/components/ui/input"; // Make sure this import is correct
 
 const categories = [
   {
@@ -37,13 +40,13 @@ export const SearchDashboard = ({
 }) => {
   return (
     <div className="mx-5 py-2">
-      <div className="flex  md:flew-row gap-2 mt-5 py-6 px-4 bg-white rounded">
+      <div className="flex md:flex-row gap-2 mt-5 py-6 px-4 bg-white rounded">
         <div className="flex gap-2 items-center p-2 border rounded-full bg-white w-full md:w-[20%]">
           <SearchIcon />
-          <input
+          <Input
             type="text"
             placeholder="Search..."
-            className="bg-transparent outline-none text-black"
+            className="bg-transparent outline-none text-black border-none"
             onChange={(e) => onSearchInput(e.target.value)}
           />
         </div>

@@ -58,12 +58,12 @@ const TemplatePage = ({ params }: { params: templateSlugProps }) => {
 
       <form action={onSubmit}>
         <div className="flex flex-col gap-4 p-5 mt-5 bg-white">
-          {selectedTemplate?.form?.map((form) => (
-            <div key={selectedTemplate.slug}>
+          {selectedTemplate?.form?.map((form, index) => (
+            <div key={`${selectedTemplate.slug}-${form.field}-${index}`}>
               <label>{form.label}</label>
               {form.field === "input" ? (
                 <div className="mt-5">
-                  <Input name="title"></Input>
+                  <Input name="title" />
                 </div>
               ) : (
                 <div className="mt-5">
@@ -75,7 +75,7 @@ const TemplatePage = ({ params }: { params: templateSlugProps }) => {
         </div>
         <Button className="mt-5" type="submit">
           {isLoading ? (
-            <Loader className="animate-spin"></Loader>
+            <Loader className="animate-spin" />
           ) : (
             "Generate Content"
           )}
