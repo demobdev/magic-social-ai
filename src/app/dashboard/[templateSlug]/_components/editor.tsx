@@ -2,6 +2,7 @@
 
 import React, { useMemo } from 'react';
 import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
 
 export const Editor = ({ value }: { value: string }) => {
   const ReactQuill = useMemo(
@@ -11,6 +12,15 @@ export const Editor = ({ value }: { value: string }) => {
     }),
     []
   );
+
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline'],
+      [{'list': 'ordered'}, {'list': 'bullet'}],
+      ['clean']
+    ],
+  };
 
   return (
     <ReactQuill
