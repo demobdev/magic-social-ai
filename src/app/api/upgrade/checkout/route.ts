@@ -59,16 +59,14 @@ export async function POST(req: Request) {
       });
     }
 
-    if (!stripeCustomer?.stripeCustomerId) {
-      throw new Error("Failed to create or retrieve Stripe customer");
-    }
-
     const session = await stripe.checkout.sessions.create({
       customer: stripeCustomer?.stripeCustomerId,
       line_items,
       mode: "payment",
-      success_url: `https://wordsmith-xi.vercel.app/dashboard/`,
-      cancel_url: `https://wordsmith-xi.vercel.app/`,
+      //success_url: `http://localhost:3000/dashboard/`,
+      //cancel_url: `http://localhost:3000/`,
+      success_url: `http://wordsmith-xi.vercel.app/dashboard/`,
+      cancel_url: `http://wordsmith-xi.vercel.app/`,
       metadata: {
         userId: userId,
       },
@@ -76,7 +74,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    console.error("Checkout error:", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
