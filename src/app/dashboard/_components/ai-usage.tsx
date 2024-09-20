@@ -2,9 +2,8 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import AIChart from "./ai-chart";
 
-export const AIUsage = async () => {
+export async function getAIUsageData() {
   const { userId } = auth();
 
   if (!userId) {
@@ -34,9 +33,5 @@ export const AIUsage = async () => {
 
   availableCredit = userCredit ? Number(userCredit?.totalCredit) : 10000;
 
-  return (
-    <div className="bg-white">
-      <AIChart availableCredit={availableCredit} totalUsage={totalUsage} />
-    </div>
-  );
-};
+  return { availableCredit, totalUsage };
+}

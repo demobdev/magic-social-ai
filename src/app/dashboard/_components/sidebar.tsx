@@ -2,9 +2,13 @@
 
 import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
-import { CreditCard, History, WandSparkles } from "lucide-react";
+import { CreditCard, History, WandSparkles, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+interface SidebarProps {
+  onClose?: () => void;
+}
 
 const menuList = [
   {
@@ -24,27 +28,34 @@ const menuList = [
   },
 ];
 
-export const Sidebar = () => {
+export const Sidebar = ({ onClose }: SidebarProps) => {
   const path = usePathname();
 
-  console.log("path", path);
   return (
-    <div className="p-5 bg-white h-[800px] flex flex-col">
-      <Logo />
-      <div className="mt-10 h-max flex flex-col justify-between">
-        {menuList.map((menu) => (
-          <Link
-            href={menu.path}
-            key={menu.name}
-            className={cn(
-              "flex gap-2 mb-2 p-3 hover:bg-primary hover:text-white cursor-pointer rounded-lg items-center",
-              path === menu.path && "bg-primary text-white"
-            )}
-          >
-            <menu.icon className="h-6 w-6"></menu.icon>
-            <h2 className="text-lg">{menu.name}</h2>
-          </Link>
-        ))}
+    <div className="flex flex-col h-full">
+      <div className="p-5 flex justify-between items-center md:hidden">
+        <Logo />
+        <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <X size={24} />
+        </button>
+      </div>
+      <div className="p-5 flex-grow">
+        <nav className="space-y-2">
+          {menuList.map((menu) => (
+            <Link
+              href={menu.path}
+              key={menu.name}
+              className={cn(
+                "flex items-center gap-2 p-3 hover:bg-primary hover:text-white rounded-lg transition-colors",
+                path === menu.path && "bg-primary text-white"
+              )}
+              onClick={onClose}
+            >
+              <menu.icon className="h-6 w-6" />
+              <span className="text-lg">{menu.name}</span>
+            </Link>
+          ))}
+        </nav>
       </div>
     </div>
   );
