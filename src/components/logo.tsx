@@ -19,21 +19,19 @@ export const Logo = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const isDashboard = pathname.startsWith("/dashboard");
 
   return (
-    <div className="w-full flex items-center justify-between relative">
-      {isDashboard && (
-        <button onClick={onMenuClick} className="absolute left-0 md:hidden">
-          <Menu size={24} />
-        </button>
-      )}
-      <div className="flex items-center justify-center w-full">
+    <div className="w-full flex items-center justify-between">
+      <div className="flex items-center">
+        {isDashboard && (
+          <button onClick={onMenuClick} className="mr-2 md:hidden">
+            <Menu size={24} />
+          </button>
+        )}
         <Link href="/" className="flex items-center">
           <Image src="/content_flash_icon.png" width={40} height={40} alt="Content Flash Icon" />
           <h2 className={cn(museo.className, "text-xl ml-2")}>Content Flash</h2>
         </Link>
       </div>
-      <div className="absolute right-0 md:hidden">
-        <Auth />
-      </div>
+      <Auth />
     </div>
   );
 };
