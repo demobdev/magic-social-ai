@@ -1,10 +1,10 @@
 "use client";
 
-import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
 import { CreditCard, History, WandSparkles, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 interface SidebarProps {
   onClose?: () => void;
@@ -33,11 +33,14 @@ export const Sidebar = ({ onClose }: SidebarProps) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-5 flex justify-between items-center md:hidden">
-        <Logo />
-        <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+      <div className="p-5 flex justify-between items-center relative">
+        <button onClick={onClose} className="absolute left-5 text-gray-500 hover:text-gray-700 md:hidden">
           <X size={24} />
         </button>
+        <div className="flex items-center justify-center w-full">
+          <Image src="/content_flash_icon.png" width={40} height={40} alt="Content Flash Icon" />
+          <span className="text-xl ml-2 font-bold">Content Flash</span>
+        </div>
       </div>
       <div className="p-5 flex-grow">
         <nav className="space-y-2">
