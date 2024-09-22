@@ -1,36 +1,16 @@
 "use client";
 
-import { Auth } from "@/components/auth";
 import { SearchIcon } from "lucide-react";
-import React from "react";
-import { Categories } from "./categories";
-import { Input } from "@/components/ui/input"; // Make sure this import is correct
+import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
 
 const categories = [
-  {
-    name: "All",
-    value: "All",
-  },
-  {
-    name: "Youtube",
-    value: "Youtube",
-  },
-  {
-    name: "Instagram",
-    value: "Instagram",
-  },
-  {
-    name: "Tiktok",
-    value: "Tiktok",
-  },
-  {
-    name: "Linkedin",
-    value: "Linkedin",
-  },
-  {
-    name: "Tweet",
-    value: "Tweet",
-  },
+  { name: "All", value: "All" },
+  { name: "Youtube", value: "Youtube" },
+  { name: "Instagram", value: "Instagram" },
+  { name: "Tiktok", value: "Tiktok" },
+  { name: "Linkedin", value: "Linkedin" },
+  { name: "Tweet", value: "Tweet" },
 ];
 
 export const SearchDashboard = ({
@@ -38,21 +18,34 @@ export const SearchDashboard = ({
 }: {
   onSearchInput: React.Dispatch<React.SetStateAction<string | undefined>>;
 }) => {
+  const [activeCategory, setActiveCategory] = useState("All");
+
   return (
-    <div className="mx-5 py-2">
-      <div className="flex md:flex-row gap-2 mt-5 py-6 px-4 bg-white rounded">
-        <div className="flex gap-2 items-center p-2 border rounded-full bg-white w-full md:w-[20%]">
-          <SearchIcon />
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+      <div className="bg-white rounded-3xl shadow-sm p-4">
+        <div className="flex items-center p-3 border rounded-full bg-gray-100 mb-4">
+          <SearchIcon className="text-gray-400 mr-2" />
           <Input
             type="text"
             placeholder="Search..."
-            className="bg-transparent outline-none text-black border-none"
+            className="bg-transparent outline-none text-black border-none flex-grow placeholder-gray-400"
             onChange={(e) => onSearchInput(e.target.value)}
           />
         </div>
-        <Categories items={categories} />
-        <div className="ml-auto">
-          <Auth />
+        <div className="flex flex-wrap gap-2">
+          {categories.map((category) => (
+            <button
+              key={category.value}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeCategory === category.value
+                  ? "bg-[#E98206] text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+              onClick={() => setActiveCategory(category.value)}
+            >
+              {category.name}
+            </button>
+          ))}
         </div>
       </div>
     </div>

@@ -1,17 +1,22 @@
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+"use client";
+
+import { SignInButton, SignOutButton, useAuth } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 
 export const Auth = () => {
+  const { isSignedIn } = useAuth();
+
+  if (isSignedIn) {
+    return (
+      <SignOutButton>
+        <Button variant="outline">Sign Out</Button>
+      </SignOutButton>
+    );
+  }
+
   return (
-    <div>
-      <SignedOut>
-        <SignInButton>
-          <Button>Sign In</Button>
-        </SignInButton>
-      </SignedOut>
-      <SignedIn>
-        <UserButton></UserButton>
-      </SignedIn>
-    </div>
+    <SignInButton mode="modal">
+      <Button variant="outline">Sign In</Button>
+    </SignInButton>
   );
 };

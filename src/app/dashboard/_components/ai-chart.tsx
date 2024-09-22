@@ -11,11 +11,11 @@ import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
 const chartConfig = {
   available: {
     label: "Available",
-    color: "hsl(var(--chart-1))",
+    color: "#000000", // Black for available credits
   },
   used: {
     label: "Used",
-    color: "hsl(var(--chart-2))",
+    color: "#E98206", // Gold for used credits
   },
 } satisfies ChartConfig;
 
@@ -79,12 +79,12 @@ export default function AIChart({
           dataKey="available"
           stackId="a"
           cornerRadius={5}
-          fill="var(--color-available)"
+          fill="#000000" // Black for available credits
           className="stroke-transparent stroke-2"
         />
         <RadialBar
           dataKey="used"
-          fill="var(--color-used)"
+          fill="#E98206" // Gold for used credits
           stackId="a"
           cornerRadius={5}
           className="stroke-transparent stroke-2"
